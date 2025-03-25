@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 
 	"github.com/fr-str/bingo/pkg/api"
+	"github.com/fr-str/bingo/pkg/bingo"
 	"github.com/fr-str/bingo/pkg/db"
 )
 
@@ -18,7 +19,7 @@ func main() {
 		panic(err)
 	}
 	api := api.API{
-		DB: st,
+		Bingo: bingo.Bingo{DB: st},
 	}
 
 	api.ListenAndServe(":8089")

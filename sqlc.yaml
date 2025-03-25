@@ -7,4 +7,9 @@ sql:
       go:
         package: "store"
         out: "pkg/store"
+        overrides:
+          - db_type: "RFC3339"
+            go_type:
+              import: "github.com/fr-str/bingo/pkg/db/types"
+              type: "RFC3339"
 

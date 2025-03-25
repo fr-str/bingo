@@ -6,7 +6,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = excluded.updated_at;
 
 -- name: GetEntry :one
-SELECT * FROM bingo_history WHERE id = :id;
+SELECT * FROM bingo_history WHERE id = :id AND session = :session;
 
 -- name: GetEntries :many
 SELECT * FROM bingo_history WHERE session = :session AND is_set IS NOT NULL;
