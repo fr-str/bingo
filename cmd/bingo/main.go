@@ -22,5 +22,5 @@ func main() {
 		Bingo: bingo.Bingo{DB: st},
 	}
 
-	api.ListenAndServe(":8089")
+	api.ListenAndServe(":2137")
 }
