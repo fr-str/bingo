@@ -101,16 +101,16 @@ func (api *API) handleStats(w http.ResponseWriter, r *http.Request) error {
 
 	// return in format requested by client
 	switch r.Header.Get("Accept") {
-	case "application/json":
-		return json.NewEncoder(w).Encode(data)
 	case "text/csv":
-		fallthrough
-	default:
 		sdata := [][]string{{"field", "count", "date"}}
 		for _, d := range data {
 			sdata = append(sdata, []string{d.Field, strconv.FormatInt(d.Count, 10), d.Date.(string)})
 		}
-
 		return csv.NewWriter(w).WriteAll(sdata)
+
+	case "application/json":
+		fallthrough
+	default:
+		return json.NewEncoder(w).Encode(data)
 	}
 }
