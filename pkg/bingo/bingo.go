@@ -38,7 +38,7 @@ func (b Bingo) SaveBingoCell(ctx context.Context, session, field string) error {
 	id := bingoIDFormat(field, session)
 	session = bingoSession(session)
 
-	entry, err := b.DB.GetEntry(ctx, store.GetEntryParams{ID: field, Session: session})
+	entry, err := b.DB.GetEntry(ctx, store.GetEntryParams{ID: id, Session: session})
 	if err != nil && !errors.Is(err, sql.ErrNoRows) {
 		return err
 	}
