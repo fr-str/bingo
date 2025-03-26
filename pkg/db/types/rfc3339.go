@@ -19,6 +19,9 @@ func (t RFC3339) Scan(value any) error {
 		return t.UnmarshalText([]byte(v))
 	case []byte:
 		return t.UnmarshalText(v)
+	case time.Time:
+		t.Time = v
+		return nil
 	default:
 		return fmt.Errorf("cannot scan %T", value)
 	}
