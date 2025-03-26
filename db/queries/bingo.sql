@@ -10,3 +10,15 @@ SELECT * FROM bingo_history WHERE id = :id AND session = :session;
 
 -- name: GetEntries :many
 SELECT * FROM bingo_history WHERE session = :session AND is_set IS NOT NULL;
+
+-- aggregates by field and date
+-- name: BingoStats :many
+SELECT
+    field,
+    count(*) as count,
+    date(created_at) as date
+FROM bingo_history
+WHERE is_set IS NOT NULL
+GROUP BY field, date(created_at)
+ORDER BY date(created_at) DESC;
+

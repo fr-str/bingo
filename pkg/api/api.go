@@ -1,8 +1,11 @@
 package api
 
 import (
+	"encoding/csv"
+	"encoding/json"
 	"errors"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/fr-str/bingo/pkg/api/middleware"
@@ -51,6 +54,7 @@ func handlerErrors(handler func(http.ResponseWriter, *http.Request) error) func(
 func (api *API) RegisterAll() {
 	api.HandleFunc("GET /", api.index)
 	api.HandleFunc("GET /api/square/click", api.handleSquareClick)
+	api.HandleFunc("GET /api/stats", api.handleStats)
 }
 
 func (api *API) index(w http.ResponseWriter, r *http.Request) error {
@@ -87,4 +91,26 @@ func (api *API) handleSquareClick(w http.ResponseWriter, r *http.Request) error 
 	w.WriteHeader(http.StatusFound)
 
 	return nil
+}
+
+func (api *API) handleStats(w http.ResponseWriter, r *http.Request) error {
+	data, err := api.Bingo.DB.BingoStats(r.Context())
+	if err != nil {
+		return err
+	}
+
+	// return in format requested by client
+	switch r.Header.Get("Accept") {
+	case "application/json":
+		return json.NewEncoder(w).Encode(data)
+	case "text/csv":
+		fallthrough
+	default:
+		sdata := [][]string{{"field", "count", "date"}}
+		for _, d := range data {
+			sdata = append(sdata, []string{d.Field, strconv.FormatInt(d.Count, 10), d.Date.(string)})
+		}
+
+		return csv.NewWriter(w).WriteAll(sdata)
+	}
 }

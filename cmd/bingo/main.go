@@ -2,10 +2,12 @@ package main
 
 import (
 	"context"
+	"os"
 	"path/filepath"
 
 	"github.com/fr-str/bingo/pkg/api"
 	"github.com/fr-str/bingo/pkg/bingo"
+	_ "github.com/fr-str/bingo/pkg/config"
 	"github.com/fr-str/bingo/pkg/db"
 )
 
@@ -22,5 +24,5 @@ func main() {
 		Bingo: bingo.Bingo{DB: st},
 	}
 
-	api.ListenAndServe(":2137")
+	api.ListenAndServe(os.Getenv("BINGO_ADDR"))
 }
