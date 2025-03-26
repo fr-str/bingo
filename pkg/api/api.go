@@ -100,8 +100,9 @@ func (api *API) handleStats(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	// return in format requested by client
-	switch r.Header.Get("Accept") {
-	case "text/csv":
+	accept := r.Header.Get("Accept")
+	switch {
+	case strings.Contains(accept, "text/csv"):
 		sdata := [][]string{{"field", "count", "date"}}
 		for _, d := range data {
 			sdata = append(sdata, []string{d.Field, strconv.FormatInt(d.Count, 10), d.Date.(string)})
@@ -109,7 +110,7 @@ func (api *API) handleStats(w http.ResponseWriter, r *http.Request) error {
 		w.Header().Add("content-type", "text/csv")
 		return csv.NewWriter(w).WriteAll(sdata)
 
-	case "application/json":
+	case strings.Contains(accept, "application/json"):
 		fallthrough
 	default:
 		w.Header().Add("content-type", "application/json")
