@@ -106,11 +106,13 @@ func (api *API) handleStats(w http.ResponseWriter, r *http.Request) error {
 		for _, d := range data {
 			sdata = append(sdata, []string{d.Field, strconv.FormatInt(d.Count, 10), d.Date.(string)})
 		}
+		w.Header().Add("content-type", "text/csv")
 		return csv.NewWriter(w).WriteAll(sdata)
 
 	case "application/json":
 		fallthrough
 	default:
+		w.Header().Add("content-type", "application/json")
 		return json.NewEncoder(w).Encode(data)
 	}
 }
