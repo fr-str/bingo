@@ -35,6 +35,7 @@ func bingoIDFormat(field, session string) string {
 }
 
 func (b Bingo) SaveBingoCell(ctx context.Context, session, field string) error {
+	id := bingoIDFormat(field, session)
 	session = bingoSession(session)
 
 	entry, err := b.DB.GetEntry(ctx, store.GetEntryParams{ID: field, Session: session})
@@ -43,7 +44,7 @@ func (b Bingo) SaveBingoCell(ctx context.Context, session, field string) error {
 	}
 
 	err = b.DB.SaveBingoEntry(ctx, store.SaveBingoEntryParams{
-		ID:        bingoIDFormat(field, session),
+		ID:        id,
 		Field:     field,
 		Session:   session,
 		IsSet:     sql.NullInt64{Int64: 1, Valid: !entry.IsSet.Valid},
