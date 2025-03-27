@@ -27,6 +27,7 @@ pub fn main() !void {
     var router = try server.router(.{});
     router.get("/", api.index, .{});
     router.get("/api/stats", api.stats, .{});
+    router.get("/api/square/click", api.squareClick, .{});
 
     // blocks
     try server.listen();
