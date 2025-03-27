@@ -9,14 +9,16 @@ import (
 	"github.com/fr-str/bingo/pkg/bingo"
 	_ "github.com/fr-str/bingo/pkg/config"
 	"github.com/fr-str/bingo/pkg/db"
-)
-
-const (
-	dbDir = "./data"
+	"github.com/fr-str/env"
 )
 
 func main() {
-	st, err := db.ConnectStore(context.Background(), filepath.Join(dbDir, "bingo.db"))
+	dbDir := env.Get("BINGO_DB_DIR", "./data")
+	var dbPath string
+	if dbDir != ":memory:" {
+		dbPath = filepath.Join(dbDir, "bingo.db")
+	}
+	st, err := db.ConnectStore(context.Background(), dbPath)
 	if err != nil {
 		panic(err)
 	}

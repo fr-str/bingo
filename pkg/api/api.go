@@ -81,7 +81,10 @@ func (api *API) handleSquareClick(w http.ResponseWriter, r *http.Request) error 
 		return errors.New("field is required")
 	}
 
-	session := r.Context().Value("session").(string)
+	session, ok := r.Context().Value("session").(string)
+	if !ok {
+		return errors.New("nie wiem jak ale nie ma sesji ¯\\_(ツ)_/¯")
+	}
 	err := api.Bingo.SaveBingoCell(r.Context(), session, field)
 	if err != nil {
 		return err
