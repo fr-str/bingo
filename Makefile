@@ -1,7 +1,5 @@
-run-go-test:
-	BINGO_DB_DIR=:memory: go run ./cmd/bingo/main.go
 test:
-	hurl --test ./hurl
+	@./test.sh
 
 tools:
 	go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
