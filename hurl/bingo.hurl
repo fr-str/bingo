@@ -37,11 +37,11 @@ Content-Type: application/json
 bytes count == 5
 
 # check if bingo-cells are rendered
-GET http://localhost:2138/
+GET http://localhost:2138/bingo-board
 HTTP 200
 Content-Type: text/html; charset=utf-8
 [Asserts]
-xpath "//div[@class='bingo-cell']" count != 0
+xpath "//div[@class='bingo-cell-container']" count != 0
 
 # set timesheets crash again
 GET http://localhost:2138/api/square/click
@@ -51,7 +51,7 @@ HTTP 302
 Location: /
 
 # check if timesheets crash is set
-GET http://localhost:2138/
+GET http://localhost:2138/bingo-board
 HTTP 200
 Content-Type: text/html; charset=utf-8
 [Asserts]

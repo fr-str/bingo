@@ -99,7 +99,7 @@ func Index() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</head><body><div class=\"card\"><div class=\"card-header\"><h1 class=\"card-title\">Work Bingo</h1><p class=\"card-description\">Click on squares when they happen</p></div><div class=\"bingo-board\" id=\"bingoBoard\" hx-get=\"/bingo-board\" hx-trigger=\"load\" hx-swap=\"innerHTML\"></div></div></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</head><body><div class=\"card\"><div class=\"card-header\"><h1 class=\"card-title\">Work Bingo</h1><p class=\"card-description\">Click on squares when they happen</p></div><div class=\"bingo-board\" id=\"bingoBoard\" hx-get=\"/bingo-board\" hx-trigger=\"load,every 5s\" hx-swap=\"innerHTML\"></div></div></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
