@@ -55,6 +55,7 @@ func (api *API) RegisterAll() {
 	api.HandleFunc("GET /", api.index)
 	api.HandleFunc("GET /api/square/click", api.handleSquareClick)
 	api.HandleFunc("GET /api/stats", api.handleStats)
+	api.HandleFunc("GET /bingo-board", api.handleBoard)
 }
 
 func (api *API) index(w http.ResponseWriter, r *http.Request) error {
@@ -62,6 +63,11 @@ func (api *API) index(w http.ResponseWriter, r *http.Request) error {
 		http.NotFound(w, r)
 		return nil
 	}
+
+	return web.Index().Render(r.Context(), w)
+}
+
+func (api *API) handleBoard(w http.ResponseWriter, r *http.Request) error {
 	session, ok := r.Context().Value("session").(string)
 	if !ok {
 		return errors.New("nie wiem jak ale nie ma sesji ¯\\_(ツ)_/¯")
@@ -72,7 +78,7 @@ func (api *API) index(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
-	return web.Index(data).Render(r.Context(), w)
+	return web.BingoBoard(data).Render(r.Context(), w)
 }
 
 func (api *API) handleSquareClick(w http.ResponseWriter, r *http.Request) error {

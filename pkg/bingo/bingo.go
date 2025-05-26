@@ -13,6 +13,7 @@ import (
 
 type BingoCell struct {
 	Field string
+	Count int
 	IsSet bool
 }
 
@@ -30,23 +31,19 @@ type Bingo struct {
 	DB *store.Queries
 }
 
-func bingoIDFormat(field, session string) string {
-	return fmt.Sprintf("%s/%s/%d", session, field, dayStamp(time.Now()))
-}
-
 func (b Bingo) SaveBingoCell(ctx context.Context, session, field string) error {
-	id := bingoIDFormat(field, session)
-	session = bingoSession(session)
-
-	entry, err := b.DB.GetEntry(ctx, store.GetEntryParams{ID: id, Session: session})
+	day := dayStamp(time.Now())
+	entry, err := b.DB.GetEntry(ctx, store.GetEntryParams{
+		Field: field, Session: session, Day: day,
+	})
 	if err != nil && !errors.Is(err, sql.ErrNoRows) {
 		return err
 	}
 
 	err = b.DB.SaveBingoEntry(ctx, store.SaveBingoEntryParams{
-		ID:        id,
 		Field:     field,
 		Session:   session,
+		Day:       day,
 		IsSet:     sql.NullInt64{Int64: 1, Valid: !entry.IsSet.Valid},
 		CreatedAt: types.RFC3339{Time: time.Now()},
 		UpdatedAt: types.RFC3339{Time: time.Now()},
@@ -66,23 +63,35 @@ var fields = []string{
 }
 
 func (b Bingo) GetBingoCells(ctx context.Context, session string) ([]BingoCell, error) {
-	session = bingoSession(session)
-
-	alreadySet, err := b.DB.GetEntries(ctx, session)
+	alreadySet, err := b.DB.GetEntries(ctx, store.GetEntriesParams{
+		Session: session, Day: dayStamp(time.Now()),
+	})
 	if err != nil {
 		return nil, err
 	}
 
-	m := make(map[string]bool)
+	m := make(map[string]struct {
+		IsSet bool
+		Count int
+	})
 	for _, entry := range alreadySet {
-		m[entry.Field] = true
+		m[entry.Field] = struct {
+			IsSet bool
+			Count int
+		}{
+			IsSet: true,
+			// subtract 1 because we are counted too
+			// and count is supposed to be noumber of other people who marked this square
+			Count: int(entry.DailyFieldCount) - 1,
+		}
 	}
 
 	data := make([]BingoCell, len(fields))
 	for i, cell := range fields {
 		data[i] = BingoCell{
 			Field: cell,
-			IsSet: m[cell],
+			IsSet: m[cell].IsSet,
+			Count: m[cell].Count,
 		}
 	}
 	return data, nil
