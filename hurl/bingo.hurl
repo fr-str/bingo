@@ -8,6 +8,7 @@ cookie "session" exists
 GET http://localhost:2138/api/square/click
 [Query]
 field: timesheets crash
+type: 1
 HTTP 302
 Location: /
 
@@ -26,6 +27,7 @@ jsonpath "$.[0].Date" != ""
 GET http://localhost:2138/api/square/click
 [Query]
 field: timesheets crash
+type: 1
 HTTP 302
 Location: /
 
@@ -47,6 +49,7 @@ xpath "//div[@class='bingo-cell-container']" count != 0
 GET http://localhost:2138/api/square/click
 [Query]
 field: timesheets crash
+type: 1
 HTTP 302
 Location: /
 
