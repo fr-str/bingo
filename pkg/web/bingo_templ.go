@@ -35,7 +35,7 @@ func Index(data bingo.BingoBoard) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Work Bingo Board</title><link rel=\"stylesheet\" href=\"/static/bingo.css\"><script src=\"https://unpkg.com/htmx.org@1.9.12\"></script></head><body><div class=\"card\"><div class=\"card-header\"><h1 class=\"card-title\">Work Bingo</h1><p class=\"card-description\">Click on squares when they happen</p></div><div class=\"bingo-board\" id=\"bingoBoard\" hx-get=\"/bingo-board\" hx-trigger=\"every 5s\" hx-swap=\"innerHTML\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Work Bingo Board</title><link rel=\"stylesheet\" href=\"/static/bingo.css\"><script src=\"https://unpkg.com/htmx.org@1.9.12\"></script></head><body><div class=\"card\"><div class=\"card-header\"><h1 class=\"card-title\">Work Bingo</h1><p class=\"card-description\">Click on squares when they happen</p></div><div class=\"bingo-board\" id=\"bingoBoard\" hx-get=\"/bingo-board\" hx-trigger=\"every 5s, force-load from:body\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -73,12 +73,16 @@ func BingoBoard(board bingo.BingoBoard) templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		for _, cell := range board.Cells {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<a href=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<a hx-trigger=\"click\" hx-get=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var3 templ.SafeURL = templ.URL(fmt.Sprintf("/api/square/click?field=%s&type=%d", cell.Field, board.Type))
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var3)))
+			var templ_7745c5c3_Var3 string
+			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(templ.URL(fmt.Sprintf("/api/square/click?field=%s&type=%d", cell.Field, board.Type)))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/web/bingo.templ`, Line: 38, Col: 96}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -121,7 +125,7 @@ func BingoBoard(board bingo.BingoBoard) templ.Component {
 				var templ_7745c5c3_Var4 string
 				templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(cell.Count))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/web/bingo.templ`, Line: 52, Col: 32}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/web/bingo.templ`, Line: 53, Col: 32}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 				if templ_7745c5c3_Err != nil {

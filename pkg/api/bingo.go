@@ -79,13 +79,15 @@ func (api *API) handleSquareClick(w http.ResponseWriter, r *http.Request) error 
 		return err
 	}
 
-	switch typeValue {
-	case bingo.Regular:
-		w.Header().Set("Location", "/")
-	case bingo.AllHands:
-		w.Header().Set("Location", "/all-hands")
-	}
-	w.WriteHeader(http.StatusFound)
+	w.Header().Set("HX-Trigger", "force-load")
+	w.WriteHeader(http.StatusOK)
+	// switch typeValue {
+	// case bingo.Regular:
+	// 	w.Header().Set("Location", "/")
+	// case bingo.AllHands:
+	// 	w.Header().Set("Location", "/all-hands")
+	// }
+	// w.WriteHeader(http.StatusFound)
 
 	return nil
 }

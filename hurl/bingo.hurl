@@ -9,8 +9,7 @@ GET http://localhost:2138/api/square/click
 [Query]
 field: timesheets crash
 type: 1
-HTTP 302
-Location: /
+HTTP 200
 
 # check if set
 GET http://localhost:2138/api/stats
@@ -28,8 +27,7 @@ GET http://localhost:2138/api/square/click
 [Query]
 field: timesheets crash
 type: 1
-HTTP 302
-Location: /
+HTTP 200
 
 # should not be set
 GET http://localhost:2138/api/stats
@@ -50,8 +48,7 @@ GET http://localhost:2138/api/square/click
 [Query]
 field: timesheets crash
 type: 1
-HTTP 302
-Location: /
+HTTP 200
 
 # check if timesheets crash is set
 GET http://localhost:2138/bingo-board

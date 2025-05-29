@@ -16,20 +16,21 @@ const (
 var allHandsFields = []string{
 	"AI is great",
 	fmt.Sprintf(`<div>%[1]s%[1]s</div><div>%[2]s%[2]s%[2]s%[2]s%[2]s%[2]s%[2]s%[2]s</div>`, pepePoland, pepeIndia),
-	"We are improving test coverage",
-	"Hackathon went great",
-	"dad jokes",
-	"AI = massive boost for productivity",
-	"new AI product",
 	"audio issues",
 	"AdManager has \"Clients\"",
-	"the fucked up music drowns out the person talking",
+
+	"Hackathon went great",
+	"dad jokes",
 	"audio issues",
+	"AI = massive boost for productivity",
+	"new AI product",
+	"We are improving test coverage",
+	"audio issues",
+	"the fucked up music drowns out the person talking",
 	"AdManager i making money $$",
 	"audio issues",
-	"audio issues",
-	"audio issues",
 	"i will get in trouble for making this board XD",
+	"audio issues",
 }
 
 func (b *Bingo) GetAllHandsBingoCells(ctx context.Context, session string) ([]BingoCell, error) {

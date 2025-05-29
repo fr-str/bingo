@@ -13,8 +13,8 @@ templ Index(data bingo.BingoBoard) {
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 			<title>Work Bingo Board</title>
-			<link rel="stylesheet" href="/static/bingo.css">
-	<script src="https://unpkg.com/htmx.org@1.9.12"></script>
+			<link rel="stylesheet" href="/static/bingo.css"/>
+			<script src="https://unpkg.com/htmx.org@1.9.12"></script>
 		</head>
 		<body>
 			<div class="card">
@@ -22,9 +22,9 @@ templ Index(data bingo.BingoBoard) {
 					<h1 class="card-title">Work Bingo</h1>
 					<p class="card-description">Click on squares when they happen</p>
 				</div>
-				<div class="bingo-board" id="bingoBoard" hx-get="/bingo-board" hx-trigger="every 5s" hx-swap="innerHTML">
-				// board wont flicker
-				@BingoBoard(data)
+				<div class="bingo-board" id="bingoBoard" hx-get="/bingo-board" hx-trigger="every 5s, force-load from:body">
+					// board wont flicker
+					@BingoBoard(data)
 				</div>
 			</div>
 		</body>
@@ -34,7 +34,8 @@ templ Index(data bingo.BingoBoard) {
 templ BingoBoard(board bingo.BingoBoard) {
 	for _, cell := range board.Cells {
 		<a
-			href={ templ.URL(fmt.Sprintf("/api/square/click?field=%s&type=%d", cell.Field, board.Type)) }
+			hx-trigger="click"
+			hx-get={ templ.URL(fmt.Sprintf("/api/square/click?field=%s&type=%d", cell.Field, board.Type)) }
 			style="text-decoration: none;"
 		>
 			<div class="bingo-cell-container">
