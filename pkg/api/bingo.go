@@ -24,8 +24,16 @@ func (api *API) index(w http.ResponseWriter, r *http.Request) error {
 		http.NotFound(w, r)
 		return nil
 	}
+	session, ok := r.Context().Value("session").(string)
+	if !ok {
+		return errors.New("nie wiem jak ale nie ma sesji ¯\\_(ツ)_/¯")
+	}
+	data, err := api.Bingo.GetBingoCells(r.Context(), session)
+	if err != nil {
+		return err
+	}
 
-	return web.Index().Render(r.Context(), w)
+	return web.Index(bingo.BingoBoard{Cells: data, Type: bingo.Regular}).Render(r.Context(), w)
 }
 
 func (api *API) handleBoard(w http.ResponseWriter, r *http.Request) error {

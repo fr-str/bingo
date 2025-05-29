@@ -1,10 +1,14 @@
 package web
 
+import (
+	"github.com/fr-str/bingo/pkg/bingo"
+)
+
 templ allHandsScript() {
 	<script src="https://unpkg.com/htmx.org@1.9.12"></script>
 }
 
-templ AllHandsIndex() {
+templ AllHandsIndex(data bingo.BingoBoard) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -46,7 +50,10 @@ templ AllHandsIndex() {
 						hx-get="/all-hands-bingo-board"
 						hx-trigger="load"
 						hx-swap="innerHTML"
-					></div>
+					>
+					// board wont flicker
+				@BingoBoard(data)
+					</div>
 
 				</div>
 				<img src="https://cdn.discordapp.com/attachments/438758201916129283/1377583442471948299/kek.png?ex=68397e0e&is=68382c8e&hm=dc5338b5a12a545b26fe7f655dd9dfe25c441c98ed59854caee8894ec600e99f" style="height: 20%;"/>

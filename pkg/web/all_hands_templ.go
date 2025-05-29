@@ -8,6 +8,10 @@ package web
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
+import (
+	"github.com/fr-str/bingo/pkg/bingo"
+)
+
 func allHandsScript() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -37,7 +41,7 @@ func allHandsScript() templ.Component {
 	})
 }
 
-func AllHandsIndex() templ.Component {
+func AllHandsIndex(data bingo.BingoBoard) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -58,7 +62,15 @@ func AllHandsIndex() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>All Hands Bingo Board</title><link rel=\"stylesheet\" href=\"/static/bingo.css\"><link rel=\"stylesheet\" href=\"/static/all-hands.css\"><link rel=\"stylesheet\" href=\"/static/beam.css\"></head><body><div class=\"beam beam-2\"></div><div class=\"beam beam-1\"></div><div class=\"beam beam-4\"></div><div class=\"beam beam-3\"></div><img src=\"https://cdn.discordapp.com/attachments/438758201916129283/1377583417952178238/shock_.png?ex=68397e09&amp;is=68382c89&amp;hm=c0a187aa0c474bc58775d1d28cc17828821354f74835423ebe22e9bba319c1c4\" style=\"position: absolute; top: 10vh;left: 60vw; height: 20%; transform: rotate(30deg);\"><div class=\"background_cover\"><img src=\"https://cdn.discordapp.com/attachments/438758201916129283/1377583475997282314/image2.png?ex=68397e16&amp;is=68382c96&amp;hm=b25552d14be94e2be9f54da019673b64570321c102b09c3817fbc27152f15ed7\" style=\"position: absolute; top: 0; left: 90vw; transform: rotate(180deg);\"> <img src=\"https://cdn.discordapp.com/attachments/438758201916129283/1377583433596932206/helikopter-helikopter.png?ex=68397e0c&amp;is=68382c8c&amp;hm=6384330bcb4ff8cb2ae444289834091f4f9e77f1fe09940982aca16cdabfa508\" id=\"helikopter\"> <img src=\"https://cdn.discordapp.com/attachments/438758201916129283/1377583400927494174/hmmm.png?ex=68397e05&amp;is=68382c85&amp;hm=d9c8ed20a59d96846e290c473a78da28feba47b5d3e63c53aacf0fd9041ad731\" style=\"position: absolute;left: 0; height: 20%;\"> <img src=\"https://cdn.discordapp.com/emojis/1223326554814156872.webp\"><p style=\"text-align: center; position: absolute; top: 0; left: 5vw; color: black; font-size: 80px; font-weight: bold; text-shadow: 0 0 10px white;\">Bingo<br>All Hands Edition</p><div class=\"card\"><div class=\"bingo-board\" id=\"bingoBoard\" hx-get=\"/all-hands-bingo-board\" hx-trigger=\"load\" hx-swap=\"innerHTML\"></div></div><img src=\"https://cdn.discordapp.com/attachments/438758201916129283/1377583442471948299/kek.png?ex=68397e0e&amp;is=68382c8e&amp;hm=dc5338b5a12a545b26fe7f655dd9dfe25c441c98ed59854caee8894ec600e99f\" style=\"height: 20%;\"></div></body></html><script src=\"https://unpkg.com/htmx.org@1.9.12\"></script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>All Hands Bingo Board</title><link rel=\"stylesheet\" href=\"/static/bingo.css\"><link rel=\"stylesheet\" href=\"/static/all-hands.css\"><link rel=\"stylesheet\" href=\"/static/beam.css\"></head><body><div class=\"beam beam-2\"></div><div class=\"beam beam-1\"></div><div class=\"beam beam-4\"></div><div class=\"beam beam-3\"></div><img src=\"https://cdn.discordapp.com/attachments/438758201916129283/1377583417952178238/shock_.png?ex=68397e09&amp;is=68382c89&amp;hm=c0a187aa0c474bc58775d1d28cc17828821354f74835423ebe22e9bba319c1c4\" style=\"position: absolute; top: 10vh;left: 60vw; height: 20%; transform: rotate(30deg);\"><div class=\"background_cover\"><img src=\"https://cdn.discordapp.com/attachments/438758201916129283/1377583475997282314/image2.png?ex=68397e16&amp;is=68382c96&amp;hm=b25552d14be94e2be9f54da019673b64570321c102b09c3817fbc27152f15ed7\" style=\"position: absolute; top: 0; left: 90vw; transform: rotate(180deg);\"> <img src=\"https://cdn.discordapp.com/attachments/438758201916129283/1377583433596932206/helikopter-helikopter.png?ex=68397e0c&amp;is=68382c8c&amp;hm=6384330bcb4ff8cb2ae444289834091f4f9e77f1fe09940982aca16cdabfa508\" id=\"helikopter\"> <img src=\"https://cdn.discordapp.com/attachments/438758201916129283/1377583400927494174/hmmm.png?ex=68397e05&amp;is=68382c85&amp;hm=d9c8ed20a59d96846e290c473a78da28feba47b5d3e63c53aacf0fd9041ad731\" style=\"position: absolute;left: 0; height: 20%;\"> <img src=\"https://cdn.discordapp.com/emojis/1223326554814156872.webp\"><p style=\"text-align: center; position: absolute; top: 0; left: 5vw; color: black; font-size: 80px; font-weight: bold; text-shadow: 0 0 10px white;\">Bingo<br>All Hands Edition</p><div class=\"card\"><div class=\"bingo-board\" id=\"bingoBoard\" hx-get=\"/all-hands-bingo-board\" hx-trigger=\"load\" hx-swap=\"innerHTML\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = BingoBoard(data).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div></div><img src=\"https://cdn.discordapp.com/attachments/438758201916129283/1377583442471948299/kek.png?ex=68397e0e&amp;is=68382c8e&amp;hm=dc5338b5a12a545b26fe7f655dd9dfe25c441c98ed59854caee8894ec600e99f\" style=\"height: 20%;\"></div></body></html><script src=\"https://unpkg.com/htmx.org@1.9.12\"></script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
