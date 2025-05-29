@@ -23,7 +23,7 @@ func (api *API) handleAllHandsBingo(w http.ResponseWriter, r *http.Request) erro
 		return err
 	}
 
-	return web.AllHandsIndex(bingo.BingoBoard{Cells: data, Type: bingo.Regular}).Render(r.Context(), w)
+	return web.AllHandsIndex(bingo.BingoBoard{Cells: data, Type: bingo.AllHands}).Render(r.Context(), w)
 }
 
 func (api *API) handleAllHandsBoard(w http.ResponseWriter, r *http.Request) error {
