@@ -1,0 +1,181 @@
+@property --gradient-angle {
+            syntax: "<angle>";
+            inherits: false;
+            initial-value: 0deg;
+        }
+
+        :root {
+            --conic-gradient-params: at 50% 50%,
+                red 0deg 45deg,
+                orange 45deg 90deg,
+                yellow 90deg 135deg,
+                green 135deg 180deg,
+                blue 180deg 225deg,
+                indigo 225deg 270deg,
+                violet 270deg 315deg,
+                cyan 315deg 360deg;
+            --gradient-angle: 0deg;
+        }
+
+body, html {
+    overflow: hidden;
+    background-image:
+        conic-gradient(from var(--gradient-angle) var(--conic-gradient-params));
+    align-items: end;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+    animation-name: rotateGradient;
+    animation-duration: 25s; 
+    animation-iteration-count: infinite; 
+    animation-timing-function: linear; 
+
+}
+
+@keyframes rotateGradient {
+            0% {
+                --gradient-angle: 0deg;
+            }
+
+            100% {
+                --gradient-angle: -360deg;
+                /* For counter-clockwise */
+            }
+        }
+
+.background_cover {
+    background-image: url('https://cdn.discordapp.com/attachments/438758201916129283/1377583467516137544/image1.png?ex=68397e14&is=68382c94&hm=770ffdafedf976c75015d83d1fd7b048b1fd8a25af48a4dab0ff8dcb45f2da98&');
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: end;
+    overflow: hidden;
+
+    justify-content: center;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: 1;
+}
+
+.card {
+    background-color: transparent;
+    border-radius: 0px;
+    border: 0px;
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
+}
+
+#helikopter {
+    position: absolute;
+    height: 40%;
+
+    animation-name: flyBackAndForth;
+    animation-duration: 42s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+}
+
+@keyframes flyBackAndForth {
+
+    /* --- Moving Right (0% to 50%) --- */
+    0%,
+    71.4% {
+        left: -20%;
+        top: 30%;
+        transform: translateY(-50%) scaleX(-1);
+    }
+
+    71.41% {
+        left: 0%;
+        top: 30%;
+        transform: translateY(calc(-50% + 40px)) scaleX(-1);
+    }
+
+    73% {
+        left: 15%;
+        top: 30%;
+        transform: translateY(calc(-50% - 40px)) scaleX(-1);
+    }
+
+    76% {
+        left: 30%;
+        top: 30%;
+        transform: translateY(calc(-50% + 40px)) scaleX(-1);
+    }
+
+    79% {
+        left: 50%;
+        top: 30%;
+        transform: translateY(calc(-50% - 40px)) scaleX(-1);
+    }
+
+    82% {
+        left: 70%;
+        top: 30%;
+        transform: translateY(calc(-50% + 40px)) scaleX(-1);
+    }
+
+    85% {
+        left: 100%;
+        top: 30%;
+        transform: translateY(calc(-50% - 40px)) scaleX(-1);
+    }
+
+    /* --- Flip and Moving Left (50% to 100%) --- */
+    87.9% {
+        left: 110%;
+        top: 30%;
+        transform: translateY(-50%) scaleX(1);
+    }
+
+    90% {
+        left: 100%;
+        top: 30%;
+        transform: translateY(calc(-50% + 40px)) scaleX(1);
+    }
+
+    91% {
+        left: 85%;
+        top: 30%;
+        transform: translateY(calc(-50% + 40px)) scaleX(1);
+    }
+
+    92% {
+        left: 75%;
+        top: 30%;
+        transform: translateY(calc(-50% - 40px)) scaleX(1);
+    }
+
+    93% {
+        left: 50%;
+        top: 30%;
+        transform: translateY(calc(-50% + 40px)) scaleX(1);
+    }
+
+    94% {
+        left: 35%;
+        top: 30%;
+        transform: translateY(calc(-50% - 40px)) scaleX(1);
+    }
+
+    95% {
+        left: 20%;
+        top: 30%;
+        transform: translateY(calc(-50% + 40px)) scaleX(1);
+    }
+
+    97% {
+        left: 5%;
+        top: 30%;
+        transform: translateY(calc(-50% - 40px)) scaleX(1);
+    }
+
+    100% {
+        left: -30%;
+        top: 30%;
+        transform: translateY(-50%) scaleX(1);
+    }
+}

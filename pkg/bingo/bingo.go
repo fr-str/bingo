@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/fr-str/bingo/pkg/db/types"
@@ -17,8 +16,9 @@ type BingoCell struct {
 	IsSet bool
 }
 
-func bingoSession(session string) string {
-	return fmt.Sprintf("%s/%d", session, dayStamp(time.Now()))
+type BingoBoard struct {
+	Cells []BingoCell
+	Type  int64
 }
 
 func dayStamp(t time.Time) int64 {
@@ -31,10 +31,10 @@ type Bingo struct {
 	DB *store.Queries
 }
 
-func (b Bingo) SaveBingoCell(ctx context.Context, session, field string) error {
+func (b Bingo) SaveBingoCell(ctx context.Context, session, field string, bType int64) error {
 	day := dayStamp(time.Now())
 	entry, err := b.DB.GetEntry(ctx, store.GetEntryParams{
-		Field: field, Session: session, Day: day,
+		Field: field, Session: session, Day: day, Type: bType,
 	})
 	if err != nil && !errors.Is(err, sql.ErrNoRows) {
 		return err
@@ -47,6 +47,7 @@ func (b Bingo) SaveBingoCell(ctx context.Context, session, field string) error {
 		IsSet:     sql.NullInt64{Int64: 1, Valid: !entry.IsSet.Valid},
 		CreatedAt: types.RFC3339{Time: time.Now()},
 		UpdatedAt: types.RFC3339{Time: time.Now()},
+		Type:      bType,
 	})
 	if err != nil {
 		return err
@@ -65,6 +66,7 @@ var fields = []string{
 func (b Bingo) GetBingoCells(ctx context.Context, session string) ([]BingoCell, error) {
 	alreadySet, err := b.DB.GetEntries(ctx, store.GetEntriesParams{
 		Session: session, Day: dayStamp(time.Now()),
+		Type: Regular,
 	})
 	if err != nil {
 		return nil, err

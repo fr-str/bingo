@@ -1,215 +1,10 @@
 package web
 
-import "fmt"
-import "github.com/fr-str/bingo/pkg/bingo"
-import "strconv"
-
-templ style() {
-	<style>
-	:root {
-		--background: #09090b;
-		--card-background: #1c1c1f;
-		--primary: #6d28d9;
-		--primary-foreground: #ffffff;
-		--secondary: #27272a;
-		--secondary-foreground: #e4e4e7;
-		--muted: #52525b;
-		--border: #3f3f46;
-	}
-
-	body {
-		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-		background-color: var(--background);
-		color: var(--primary-foreground);
-		margin: 0;
-		padding: 0;
-		min-height: 100vh;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.card {
-		background-color: var(--card-background);
-		border-radius: 8px;
-		border: 1px solid var(--border);
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-		width: 100%;
-		max-width: 800px;
-		padding: 20px;
-		margin: 20px;
-	}
-
-	.card-header {
-		text-align: center;
-		margin-bottom: 20px;
-	}
-
-	.card-title {
-		font-size: 28px;
-		font-weight: bold;
-		margin: 0 0 8px 0;
-	}
-
-	.card-description {
-		font-size: 16px;
-		color: var(--muted);
-		margin: 0;
-	}
-
-	.bingo-board {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		gap: 12px;
-	}
-
-	.bingo-cell-container {
-		position: relative;
-		/* Needed to position the counter absolutely within this container */
-		display: block;
-		/* Or 'block', depending on your layout */
-	}
-
-	.bingo-cell {
-		background-color: var(--secondary);
-		color: var(--secondary-foreground);
-		min-height: 100px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-		padding: 10px;
-		border-radius: 8px;
-		font-size: 16px;
-		font-weight: 500;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		line-height: 1.4;
-		position: relative;
-	}
-
-	.bingo-cell:hover {
-		background-color: #323237;
-	}
-
-	.bingo-cell.selected {
-		background-color: var(--primary);
-		color: var(--primary-foreground);
-		transform: scale(1.02);
-		box-shadow: 0 0 8px rgba(109, 40, 217, 0.5);
-	}
-
-	.bingo-cell span {
-		z-index: 2;
-		pointer-events: none;
-	}
-
-	.bingo-cell a {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		display: block;
-		opacity: 0;
-		z-index: 1;
-	}
-
-	.bingo-counter {
-		position: absolute;
-		top: -8px;
-		right: -8px;
-		background-color: #ff4136;
-		color: white;
-		border-radius: 50%;
-		width: 24px;
-		height: 24px;
-		font-size: 12px;
-		font-weight: bold;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-		border: 2px solid white;
-	}
-
-	.bingo-counter-hover-text {
-		visibility: hidden;
-		width: 120px;
-		background-color: #555;
-		color: #fff;
-		text-align: center;
-		padding: 5px 0;
-		border-radius: 6px;
-
-		/* Position the tooltip */
-		position: absolute;
-		z-index: 1;
-		bottom: 100%;
-		left: 50%;
-		margin-left: -60px;
-	}
-
-	.bingo-counter:hover .bingo-counter-hover-text {
-		visibility: visible;
-	}
-
-	.bingo-counter-hover-text::after {
-		content: "";
-		position: absolute;
-		top: 100%;
-		left: 50%;
-		margin-left: -5px;
-		border-width: 5px;
-		border-style: solid;
-		border-color: #555 transparent transparent transparent;
-	}
-
-	.free-space {
-		background-color: var(--primary);
-		color: var(--primary-foreground);
-	}
-
-	.new-board-button {
-		background-color: var(--primary);
-		color: var(--primary-foreground);
-		border: none;
-		border-radius: 6px;
-		padding: 12px;
-		font-size: 16px;
-		font-weight: 500;
-		cursor: pointer;
-		width: 100%;
-		margin-top: 20px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 8px;
-		transition: background-color 0.2s;
-	}
-
-	.new-board-button:hover {
-		background-color: #5b21b6;
-	}
-
-	@media (max-width: 768px) {
-		.bingo-cell {
-			min-height: 80px;
-			font-size: 14px;
-			padding: 8px;
-		}
-
-		.card {
-			max-width: 95%;
-			padding: 15px;
-		}
-	}
-</style>
-}
-
-templ script() {
-	<script src="https://unpkg.com/htmx.org@1.9.12"></script>
-}
+import (
+	"fmt"
+	"github.com/fr-str/bingo/pkg/bingo"
+	"strconv"
+)
 
 templ Index() {
 	<!DOCTYPE html>
@@ -218,7 +13,7 @@ templ Index() {
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 			<title>Work Bingo Board</title>
-			@style()
+			<link rel="stylesheet" href="/static/bingo.css">
 		</head>
 		<body>
 			<div class="card">
@@ -230,20 +25,23 @@ templ Index() {
 			</div>
 		</body>
 	</html>
-	@script()
+	<script src="https://unpkg.com/htmx.org@1.9.12"></script>
 }
 
-templ BingoBoard(board []bingo.BingoCell) {
-	for _, cell := range board {
-		<a href={ templ.URL(fmt.Sprintf("/api/square/click?field=%s", cell.Field)) } style="text-decoration: none;">
+templ BingoBoard(board bingo.BingoBoard) {
+	for _, cell := range board.Cells {
+		<a
+			href={ templ.URL(fmt.Sprintf("/api/square/click?field=%s&type=%d", cell.Field, board.Type)) }
+			style="text-decoration: none;"
+		>
 			<div class="bingo-cell-container">
 				if cell.IsSet {
 					<div class="bingo-cell selected">
-						{ cell.Field }
+						@templ.Raw(cell.Field)
 					</div>
 				} else {
 					<div class="bingo-cell">
-						{ cell.Field }
+						@templ.Raw(cell.Field)
 					</div>
 				}
 				if cell.Count > 0 {

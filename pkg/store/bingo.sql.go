@@ -58,21 +58,26 @@ WITH DailyFieldCounts AS (
     SELECT 
         field,
         COUNT(*) as daily_field_count
-    FROM bingo_history WHERE bingo_history.day = ?2 AND is_set IS NOT NULL
+    FROM bingo_history WHERE bingo_history.day = ?3 AND bingo_history.type = ?2 AND is_set IS NOT NULL
     GROUP BY field
 ) SELECT 
-    bh_session.field, bh_session.session, bh_session.day, bh_session.is_set, bh_session.created_at, bh_session.updated_at,
+    bh_session.field, bh_session.session, bh_session.day, bh_session.is_set, bh_session.created_at, bh_session.updated_at, bh_session.type,
     dfc.daily_field_count 
 FROM bingo_history bh_session
 JOIN DailyFieldCounts dfc ON bh_session.field = dfc.field
 WHERE 
     bh_session.session = ?1
+AND 
+    bh_session.type = ?2
+AND 
+    bh_session.day = ?3
 AND
     bh_session.is_set IS NOT NULL
 `
 
 type GetEntriesParams struct {
 	Session string
+	Type    int64
 	Day     int64
 }
 
@@ -83,11 +88,12 @@ type GetEntriesRow struct {
 	IsSet           sql.NullInt64
 	CreatedAt       types.RFC3339
 	UpdatedAt       types.RFC3339
+	Type            int64
 	DailyFieldCount int64
 }
 
 func (q *Queries) GetEntries(ctx context.Context, arg GetEntriesParams) ([]GetEntriesRow, error) {
-	rows, err := q.db.QueryContext(ctx, getEntries, arg.Session, arg.Day)
+	rows, err := q.db.QueryContext(ctx, getEntries, arg.Session, arg.Type, arg.Day)
 	if err != nil {
 		return nil, err
 	}
@@ -102,6 +108,7 @@ func (q *Queries) GetEntries(ctx context.Context, arg GetEntriesParams) ([]GetEn
 			&i.IsSet,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.Type,
 			&i.DailyFieldCount,
 		); err != nil {
 			return nil, err
@@ -118,17 +125,23 @@ func (q *Queries) GetEntries(ctx context.Context, arg GetEntriesParams) ([]GetEn
 }
 
 const getEntry = `-- name: GetEntry :one
-SELECT field, session, day, is_set, created_at, updated_at FROM bingo_history WHERE field = ?1 AND session = ?2 AND day = ?3 LIMIT 1
+SELECT field, session, day, is_set, created_at, updated_at, type FROM bingo_history WHERE field = ?1 AND session = ?2 AND day = ?3 AND type = ?4 LIMIT 1
 `
 
 type GetEntryParams struct {
 	Field   string
 	Session string
 	Day     int64
+	Type    int64
 }
 
 func (q *Queries) GetEntry(ctx context.Context, arg GetEntryParams) (BingoHistory, error) {
-	row := q.db.QueryRowContext(ctx, getEntry, arg.Field, arg.Session, arg.Day)
+	row := q.db.QueryRowContext(ctx, getEntry,
+		arg.Field,
+		arg.Session,
+		arg.Day,
+		arg.Type,
+	)
 	var i BingoHistory
 	err := row.Scan(
 		&i.Field,
@@ -137,13 +150,14 @@ func (q *Queries) GetEntry(ctx context.Context, arg GetEntryParams) (BingoHistor
 		&i.IsSet,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Type,
 	)
 	return i, err
 }
 
 const saveBingoEntry = `-- name: SaveBingoEntry :exec
-INSERT INTO bingo_history (field,session,day, is_set, created_at, updated_at)
-VALUES (?1,?2,?3, ?4, ?5, ?6)
+INSERT INTO bingo_history (field,session,day, is_set, created_at, updated_at,type)
+VALUES (?1,?2,?3, ?4, ?5, ?6,?7)
 ON CONFLICT (session,day,field) DO UPDATE SET
     is_set = excluded.is_set,
     updated_at = excluded.updated_at
@@ -156,6 +170,7 @@ type SaveBingoEntryParams struct {
 	IsSet     sql.NullInt64
 	CreatedAt types.RFC3339
 	UpdatedAt types.RFC3339
+	Type      int64
 }
 
 func (q *Queries) SaveBingoEntry(ctx context.Context, arg SaveBingoEntryParams) error {
@@ -166,6 +181,7 @@ func (q *Queries) SaveBingoEntry(ctx context.Context, arg SaveBingoEntryParams) 
 		arg.IsSet,
 		arg.CreatedAt,
 		arg.UpdatedAt,
+		arg.Type,
 	)
 	return err
 }

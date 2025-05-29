@@ -17,4 +17,5 @@ type BingoHistory struct {
 	IsSet     sql.NullInt64
 	CreatedAt types.RFC3339
 	UpdatedAt types.RFC3339
+	Type      int64
 }

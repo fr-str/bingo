@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(Bottom Anchored)</title>
+    <style>
+        @property --gradient-angle {
+            syntax: "<angle>";
+            inherits: false;
+            initial-value: 0deg;
+        }
+
+        :root {
+            --conic-gradient-params: at 50% 50%,
+                red 0deg 45deg,
+                orange 45deg 90deg,
+                yellow 90deg 135deg,
+                green 135deg 180deg,
+                blue 180deg 225deg,
+                indigo 225deg 270deg,
+                violet 270deg 315deg,
+                cyan 315deg 360deg;
+            --gradient-angle: 0deg;
+        }
+
+        body,
+        html {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image:
+                conic-gradient(from var(--gradient-angle) var(--conic-gradient-params));
+            align-items: end;
+            background-position: bottom;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            overflow: hidden;
+
+            animation-name: rotateGradient;
+            animation-duration: 10s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+
+        }
+
+        @keyframes rotateGradient {
+            0% {
+                --gradient-angle: 0deg;
+            }
+
+            100% {
+                --gradient-angle: -360deg;
+                /* For counter-clockwise */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+</body>
+
+</html>

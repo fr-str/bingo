@@ -8,11 +8,13 @@ package web
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "fmt"
-import "github.com/fr-str/bingo/pkg/bingo"
-import "strconv"
+import (
+	"fmt"
+	"github.com/fr-str/bingo/pkg/bingo"
+	"strconv"
+)
 
-func style() templ.Component {
+func Index() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -33,7 +35,7 @@ func style() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<style>\n\t:root {\n\t\t--background: #09090b;\n\t\t--card-background: #1c1c1f;\n\t\t--primary: #6d28d9;\n\t\t--primary-foreground: #ffffff;\n\t\t--secondary: #27272a;\n\t\t--secondary-foreground: #e4e4e7;\n\t\t--muted: #52525b;\n\t\t--border: #3f3f46;\n\t}\n\n\tbody {\n\t\tfont-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;\n\t\tbackground-color: var(--background);\n\t\tcolor: var(--primary-foreground);\n\t\tmargin: 0;\n\t\tpadding: 0;\n\t\tmin-height: 100vh;\n\t\tdisplay: flex;\n\t\talign-items: center;\n\t\tjustify-content: center;\n\t}\n\n\t.card {\n\t\tbackground-color: var(--card-background);\n\t\tborder-radius: 8px;\n\t\tborder: 1px solid var(--border);\n\t\tbox-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n\t\twidth: 100%;\n\t\tmax-width: 800px;\n\t\tpadding: 20px;\n\t\tmargin: 20px;\n\t}\n\n\t.card-header {\n\t\ttext-align: center;\n\t\tmargin-bottom: 20px;\n\t}\n\n\t.card-title {\n\t\tfont-size: 28px;\n\t\tfont-weight: bold;\n\t\tmargin: 0 0 8px 0;\n\t}\n\n\t.card-description {\n\t\tfont-size: 16px;\n\t\tcolor: var(--muted);\n\t\tmargin: 0;\n\t}\n\n\t.bingo-board {\n\t\tdisplay: grid;\n\t\tgrid-template-columns: repeat(4, 1fr);\n\t\tgap: 12px;\n\t}\n\n\t.bingo-cell-container {\n\t\tposition: relative;\n\t\t/* Needed to position the counter absolutely within this container */\n\t\tdisplay: block;\n\t\t/* Or 'block', depending on your layout */\n\t}\n\n\t.bingo-cell {\n\t\tbackground-color: var(--secondary);\n\t\tcolor: var(--secondary-foreground);\n\t\tmin-height: 100px;\n\t\tdisplay: flex;\n\t\talign-items: center;\n\t\tjustify-content: center;\n\t\ttext-align: center;\n\t\tpadding: 10px;\n\t\tborder-radius: 8px;\n\t\tfont-size: 16px;\n\t\tfont-weight: 500;\n\t\tcursor: pointer;\n\t\ttransition: all 0.3s ease;\n\t\tline-height: 1.4;\n\t\tposition: relative;\n\t}\n\n\t.bingo-cell:hover {\n\t\tbackground-color: #323237;\n\t}\n\n\t.bingo-cell.selected {\n\t\tbackground-color: var(--primary);\n\t\tcolor: var(--primary-foreground);\n\t\ttransform: scale(1.02);\n\t\tbox-shadow: 0 0 8px rgba(109, 40, 217, 0.5);\n\t}\n\n\t.bingo-cell span {\n\t\tz-index: 2;\n\t\tpointer-events: none;\n\t}\n\n\t.bingo-cell a {\n\t\tposition: absolute;\n\t\ttop: 0;\n\t\tleft: 0;\n\t\twidth: 100%;\n\t\theight: 100%;\n\t\tdisplay: block;\n\t\topacity: 0;\n\t\tz-index: 1;\n\t}\n\n\t.bingo-counter {\n\t\tposition: absolute;\n\t\ttop: -8px;\n\t\tright: -8px;\n\t\tbackground-color: #ff4136;\n\t\tcolor: white;\n\t\tborder-radius: 50%;\n\t\twidth: 24px;\n\t\theight: 24px;\n\t\tfont-size: 12px;\n\t\tfont-weight: bold;\n\t\tdisplay: flex;\n\t\tjustify-content: center;\n\t\talign-items: center;\n\t\tbox-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);\n\t\tborder: 2px solid white;\n\t}\n\n\t.bingo-counter-hover-text {\n\t\tvisibility: hidden;\n\t\twidth: 120px;\n\t\tbackground-color: #555;\n\t\tcolor: #fff;\n\t\ttext-align: center;\n\t\tpadding: 5px 0;\n\t\tborder-radius: 6px;\n\n\t\t/* Position the tooltip */\n\t\tposition: absolute;\n\t\tz-index: 1;\n\t\tbottom: 100%;\n\t\tleft: 50%;\n\t\tmargin-left: -60px;\n\t}\n\n\t.bingo-counter:hover .bingo-counter-hover-text {\n\t\tvisibility: visible;\n\t}\n\n\t.bingo-counter-hover-text::after {\n\t\tcontent: \"\";\n\t\tposition: absolute;\n\t\ttop: 100%;\n\t\tleft: 50%;\n\t\tmargin-left: -5px;\n\t\tborder-width: 5px;\n\t\tborder-style: solid;\n\t\tborder-color: #555 transparent transparent transparent;\n\t}\n\n\t.free-space {\n\t\tbackground-color: var(--primary);\n\t\tcolor: var(--primary-foreground);\n\t}\n\n\t.new-board-button {\n\t\tbackground-color: var(--primary);\n\t\tcolor: var(--primary-foreground);\n\t\tborder: none;\n\t\tborder-radius: 6px;\n\t\tpadding: 12px;\n\t\tfont-size: 16px;\n\t\tfont-weight: 500;\n\t\tcursor: pointer;\n\t\twidth: 100%;\n\t\tmargin-top: 20px;\n\t\tdisplay: flex;\n\t\talign-items: center;\n\t\tjustify-content: center;\n\t\tgap: 8px;\n\t\ttransition: background-color 0.2s;\n\t}\n\n\t.new-board-button:hover {\n\t\tbackground-color: #5b21b6;\n\t}\n\n\t@media (max-width: 768px) {\n\t\t.bingo-cell {\n\t\t\tmin-height: 80px;\n\t\t\tfont-size: 14px;\n\t\t\tpadding: 8px;\n\t\t}\n\n\t\t.card {\n\t\t\tmax-width: 95%;\n\t\t\tpadding: 15px;\n\t\t}\n\t}\n</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Work Bingo Board</title><link rel=\"stylesheet\" href=\"/static/bingo.css\"></head><body><div class=\"card\"><div class=\"card-header\"><h1 class=\"card-title\">Work Bingo</h1><p class=\"card-description\">Click on squares when they happen</p></div><div class=\"bingo-board\" id=\"bingoBoard\" hx-get=\"/bingo-board\" hx-trigger=\"load,every 5s\" hx-swap=\"innerHTML\"></div></div></body></html><script src=\"https://unpkg.com/htmx.org@1.9.12\"></script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -41,7 +43,7 @@ func style() templ.Component {
 	})
 }
 
-func script() templ.Component {
+func BingoBoard(board bingo.BingoBoard) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -62,147 +64,67 @@ func script() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<script src=\"https://unpkg.com/htmx.org@1.9.12\"></script>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		return nil
-	})
-}
-
-func Index() templ.Component {
-	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
-		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
-		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
-			return templ_7745c5c3_CtxErr
-		}
-		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
-		if !templ_7745c5c3_IsBuffer {
-			defer func() {
-				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
-				if templ_7745c5c3_Err == nil {
-					templ_7745c5c3_Err = templ_7745c5c3_BufErr
-				}
-			}()
-		}
-		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var3 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var3 == nil {
-			templ_7745c5c3_Var3 = templ.NopComponent
-		}
-		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Work Bingo Board</title>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = style().Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</head><body><div class=\"card\"><div class=\"card-header\"><h1 class=\"card-title\">Work Bingo</h1><p class=\"card-description\">Click on squares when they happen</p></div><div class=\"bingo-board\" id=\"bingoBoard\" hx-get=\"/bingo-board\" hx-trigger=\"load,every 5s\" hx-swap=\"innerHTML\"></div></div></body></html>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = script().Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		return nil
-	})
-}
-
-func BingoBoard(board []bingo.BingoCell) templ.Component {
-	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
-		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
-		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
-			return templ_7745c5c3_CtxErr
-		}
-		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
-		if !templ_7745c5c3_IsBuffer {
-			defer func() {
-				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
-				if templ_7745c5c3_Err == nil {
-					templ_7745c5c3_Err = templ_7745c5c3_BufErr
-				}
-			}()
-		}
-		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var4 == nil {
-			templ_7745c5c3_Var4 = templ.NopComponent
-		}
-		ctx = templ.ClearChildren(ctx)
-		for _, cell := range board {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<a href=\"")
+		for _, cell := range board.Cells {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<a href=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var5 templ.SafeURL = templ.URL(fmt.Sprintf("/api/square/click?field=%s", cell.Field))
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var5)))
+			var templ_7745c5c3_Var3 templ.SafeURL = templ.URL(fmt.Sprintf("/api/square/click?field=%s&type=%d", cell.Field, board.Type))
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var3)))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\" style=\"text-decoration: none;\"><div class=\"bingo-cell-container\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" style=\"text-decoration: none;\"><div class=\"bingo-cell-container\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			if cell.IsSet {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div class=\"bingo-cell selected\">")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<div class=\"bingo-cell selected\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var6 string
-				templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(cell.Field)
-				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/web/bingo.templ`, Line: 242, Col: 18}
-				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+				templ_7745c5c3_Err = templ.Raw(cell.Field).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div>")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			} else {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<div class=\"bingo-cell\">")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div class=\"bingo-cell\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var7 string
-				templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(cell.Field)
-				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/web/bingo.templ`, Line: 246, Col: 18}
-				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+				templ_7745c5c3_Err = templ.Raw(cell.Field).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</div>")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</div>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			}
 			if cell.Count > 0 {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<div class=\"bingo-counter\">")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<div class=\"bingo-counter\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var8 string
-				templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(cell.Count))
+				var templ_7745c5c3_Var4 string
+				templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(cell.Count))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/web/bingo.templ`, Line: 251, Col: 32}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/web/bingo.templ`, Line: 49, Col: 32}
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, " <span class=\"bingo-counter-hover-text\">Other people also marked this square</span></div>")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, " <span class=\"bingo-counter-hover-text\">Other people also marked this square</span></div>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</div></a>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</div></a>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
