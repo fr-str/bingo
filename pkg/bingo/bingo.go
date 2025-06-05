@@ -2,8 +2,12 @@ package bingo
 
 import (
 	"context"
+	"crypto/sha256"
 	"database/sql"
+	"encoding/binary"
 	"errors"
+	"math/rand"
+	"strconv"
 	"time"
 
 	"github.com/fr-str/bingo/pkg/db/types"
@@ -96,5 +100,42 @@ func (b Bingo) GetBingoCells(ctx context.Context, session string) ([]BingoCell, 
 			Count: m[cell].Count,
 		}
 	}
+
+	// shuffle the data to make it look random
+	// using session + day as a seed
+	// this way seed will be different for each user
+	// but stay the same during single day
+	seed := session + strconv.FormatInt(dayStamp(time.Now()), 10)
+	ShuffleSliceWithSeed(data, seed)
+
 	return data, nil
+}
+
+func stringToSeed(s string) int64 {
+	hasher := sha256.New()
+	hasher.Write([]byte(s))
+	hashBytes := hasher.Sum(nil)
+
+	// Take the first 8 bytes of the hash for the seed.
+	// SHA256 produces a 32-byte hash, so we have plenty.
+	if len(hashBytes) < 8 {
+		// This should not happen with SHA256, but as a fallback
+		var seed int64
+		for i, b := range hashBytes {
+			seed += int64(b) << (i * 8) // Simple combination if too short
+		}
+		return seed
+	}
+	return int64(binary.BigEndian.Uint64(hashBytes[:8]))
+}
+
+func ShuffleSliceWithSeed(slice []BingoCell, seedString string) {
+	seed := stringToSeed(seedString)
+	// Create a new random source and a new rand.Rand instance
+	source := rand.NewSource(seed)
+	r := rand.New(source)
+
+	r.Shuffle(len(slice), func(i, j int) {
+		slice[i], slice[j] = slice[j], slice[i]
+	})
 }
