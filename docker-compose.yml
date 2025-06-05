@@ -7,10 +7,12 @@ services:
     env_file: 
       - .prod-env
     cpu_count: 1
-    mem_limit: 4g
+    mem_limit: 1g
     volumes:
       - ./data:/bingo/data
       - ./static:/bingo/static
+    ports:
+      - 2137:2137
     networks:
       - proxy
 
