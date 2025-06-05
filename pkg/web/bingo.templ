@@ -22,7 +22,7 @@ templ Index(data bingo.BingoBoard) {
 					<h1 class="card-title">Work Bingo</h1>
 					<p class="card-description">Click on squares when they happen</p>
 				</div>
-				<div class="bingo-board" id="bingoBoard" hx-get="/bingo-board" hx-trigger="every 5s, force-load from:body">
+				<div class="bingo-board" id="bingoBoard" hx-get="/bingo-board" hx-trigger="force-load from:body">
 					// board wont flicker
 					@BingoBoard(data)
 				</div>

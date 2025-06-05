@@ -35,7 +35,7 @@ func Index(data bingo.BingoBoard) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Work Bingo Board</title><link rel=\"stylesheet\" href=\"/static/bingo.css\"><script src=\"https://unpkg.com/htmx.org@1.9.12\"></script></head><body><div class=\"card\"><div class=\"card-header\"><h1 class=\"card-title\">Work Bingo</h1><p class=\"card-description\">Click on squares when they happen</p></div><div class=\"bingo-board\" id=\"bingoBoard\" hx-get=\"/bingo-board\" hx-trigger=\"every 5s, force-load from:body\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Work Bingo Board</title><link rel=\"stylesheet\" href=\"/static/bingo.css\"><script src=\"https://unpkg.com/htmx.org@1.9.12\"></script></head><body><div class=\"card\"><div class=\"card-header\"><h1 class=\"card-title\">Work Bingo</h1><p class=\"card-description\">Click on squares when they happen</p></div><div class=\"bingo-board\" id=\"bingoBoard\" hx-get=\"/bingo-board\" hx-trigger=\"force-load from:body\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

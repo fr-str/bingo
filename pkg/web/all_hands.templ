@@ -23,10 +23,7 @@ templ AllHandsIndex(data bingo.BingoBoard) {
 				style="position: absolute; top: 10vh;left: 60vw; height: 20%; transform: rotate(30deg);"
 			/>
 			<div class="background_cover">
-				<img
-					src="/static/image2.png"
-					style="position: absolute; top: 0; left: 90vw; transform: rotate(180deg);"
-				/>
+				<img src="/static/image2.png" style="position: absolute; top: 0; left: 90vw; transform: rotate(180deg);"/>
 				<img src="/static/helikopter-helikopter.png" id="helikopter"/>
 				<img src="/static/hmmm.png" style="position: absolute;left: 0; height: 20%;"/>
 				<img src="https://cdn.discordapp.com/emojis/1223326554814156872.webp"/>
@@ -42,7 +39,7 @@ templ AllHandsIndex(data bingo.BingoBoard) {
 						class="bingo-board"
 						id="bingoBoard"
 						hx-get="/all-hands-bingo-board"
-						hx-trigger="every 5s, force-load from:body"
+						hx-trigger="force-load from:body"
 						hx-swap="innerHTML"
 					>
 						// board wont flicker
