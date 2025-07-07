@@ -3,14 +3,16 @@ package bingo
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/fr-str/bingo/pkg/store"
 )
 
 const (
-	pepePoland = `<img alt="peepoPoland, 1x" src="https://cdn.betterttv.net/emote/636794749013520589f5900c/1x.webp">`
-	pepeIndia  = `<img src="https://cdn.betterttv.net/emote/6145dc0399488d19dad00332/1x.webp">`
+	pepePoland      = `<img alt="peepoPoland, 1x" src="https://cdn.betterttv.net/emote/636794749013520589f5900c/1x.webp">`
+	pepeIndia       = `<img src="https://cdn.betterttv.net/emote/6145dc0399488d19dad00332/1x.webp">`
+	residentSleeper = `<img alt="residentSleeper, 1x" src="https://cdn.betterttv.net/emote/6097044739b5010444d0e0df/1x.webp">`
 )
 
 var allHandsFields = []string{
@@ -18,19 +20,18 @@ var allHandsFields = []string{
 	fmt.Sprintf(`<div>%[1]s%[1]s</div><div>%[2]s%[2]s%[2]s%[2]s%[2]s%[2]s%[2]s%[2]s</div>`, pepePoland, pepeIndia),
 	"audio issues",
 	"AdManager has \"Clients\"",
-
 	"Hackathon went great",
 	"dad jokes",
-	"audio issues",
+	"POLAND STRONK",
 	"AI = massive boost for productivity",
 	"new AI product",
 	"We are improving test coverage",
-	"audio issues",
+	"diversity and inclusion",
 	"the fucked up music drowns out the person talking",
-	"AdManager i making money $$",
-	"audio issues",
-	"i will get in trouble for making this board XD",
-	"audio issues",
+	"shity and confusing charts",
+	"INCIDENTS",
+	fmt.Sprintf(`<div>%[1]s%[1]s%[1]s%[1]s%[1]s</div>`, residentSleeper),
+	"shoutout SRIB",
 }
 
 func (b *Bingo) GetAllHandsBingoCells(ctx context.Context, session string) ([]BingoCell, error) {
@@ -66,5 +67,12 @@ func (b *Bingo) GetAllHandsBingoCells(ctx context.Context, session string) ([]Bi
 			Count: m[cell].Count,
 		}
 	}
+
+	// shuffle the data to make it look random
+	// using session + day as a seed
+	// this way seed will be different for each user
+	// but stay the same during single day
+	seed := session + strconv.FormatInt(dayStamp(time.Now()), 10)
+	ShuffleSliceWithSeed(data, seed)
 	return data, nil
 }

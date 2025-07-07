@@ -39,7 +39,7 @@ templ AllHandsIndex(data bingo.BingoBoard) {
 						class="bingo-board"
 						id="bingoBoard"
 						hx-get="/all-hands-bingo-board"
-						hx-trigger="force-load from:body"
+						hx-trigger="every 5s,force-load from:body"
 						hx-swap="innerHTML"
 					>
 						// board wont flicker
